@@ -89,6 +89,14 @@ Mollage is a media house whose work includes clients such as Netflix Thailand. D
 - Initial jobs remain explicitly fictional until real discovery is connected. Never manufacture application links, deadlines, office addresses, or live status.
 - Agent discovery is a future integration requiring a scheduler, accessible sources, deduplication, and a central database. A Skill alone does not schedule itself.
 
+## Latest visual direction — user-requested
+
+- Rename the application to **jobu!**, always lowercase with an exclamation mark.
+- Minimal / cute / playful productivity UI, with professional product-design clarity.
+- Palette: primary `#F43F8E`, soft pink `#FFB5D0`, background `#FFF6F9`, charcoal `#29232D`, secondary `#756D77`.
+- A rounded-square pink mascot inspired by the supplied reference, with expressive eyes that follow the mouse. Keep mascot use restrained and support touch and reduced motion.
+- Improve contrast while preserving the existing inbox flow, features, and stored data.
+
 ## Deliberately excluded
 
 Resume phone number, email, detailed address, account credentials, and original PDFs are not included in repository memory or the app bundle. The uploaded documents remain outside the checkout; project previews contain no contact page.

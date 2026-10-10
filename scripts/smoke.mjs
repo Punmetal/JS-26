@@ -206,7 +206,7 @@ try {
   await migrationContext.close();
   passed('Old profile, saved/interview state, feedback, and checklists survive migration');
 
-  const standalone = path.resolve('artifacts/nextrole-prototype.html');
+  const standalone = path.resolve('artifacts/jobu-prototype.html');
   try {
     const html = await fs.readFile(standalone, 'utf8');
     const offline = await browser.newContext(); await offline.setOffline(true);

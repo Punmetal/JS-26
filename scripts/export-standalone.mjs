@@ -21,11 +21,14 @@ for (const file of await fs.readdir(path.join(dist, 'portfolio'))) {
 }
 const js = (await fs.readFile(path.join(dist, jsPath), 'utf8')).replaceAll('</script', '<\\/script');
 const favicon = await fs.readFile(path.join(dist, 'favicon.svg'));
-html = html.replace(/<link[^>]*rel="icon"[^>]*>/, `<link rel="icon" href="data:image/svg+xml;base64,${favicon.toString('base64')}" />`);
-html = html.replace(/<link[^>]*href="[^"]+\.css"[^>]*>/, `<style>${css}</style>`);
+html = html.replace(/<link[^>]*rel="icon"[^>]*>/, () => `<link rel="icon" href="data:image/svg+xml;base64,${favicon.toString('base64')}" />`);
+html = html.replace(/<link[^>]*href="[^"]+\.css"[^>]*>/, () => `<style>${css}</style>`);
 html = html.replace(/<script[^>]*src="[^"]+"[^>]*><\/script>/, '');
-html = html.replace('</body>', `<script>globalThis.__NEXTROLE_ASSETS__ = ${JSON.stringify(assets)};</script><script type="module">${js}</script></body>`);
+// Callback replacements preserve literal $&, $', and $` in minified bundles.
+html = html.replace('</body>', () => `<script>globalThis.__NEXTROLE_ASSETS__ = ${JSON.stringify(assets)};</script><script type="module">${js}</script></body>`);
 await fs.mkdir(path.join(root, 'artifacts'), { recursive: true });
-const target = path.join(root, 'artifacts', 'nextrole-prototype.html');
+const target = path.join(root, 'artifacts', 'jobu-prototype.html');
 await fs.writeFile(target, html);
-console.log(`Portable prototype: artifacts/nextrole-prototype.html (${(Buffer.byteLength(html) / 1024 / 1024).toFixed(2)} MB)`);
+// Preserve the earlier shared artifact path as a compatibility copy.
+await fs.writeFile(path.join(root, 'artifacts', 'nextrole-prototype.html'), html);
+console.log(`Portable prototype: artifacts/jobu-prototype.html (${(Buffer.byteLength(html) / 1024 / 1024).toFixed(2)} MB)`);
