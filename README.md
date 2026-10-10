@@ -21,7 +21,7 @@ npm run preview -- --port 4173
 
 ## Visual identity
 
-Pink-forward, quiet product UI using the requested palette. The `jobu!` wordmark, face favicon, and lightweight live SVG mascot follow the supplied reference. The mascot looks toward a mouse pointer, blinks, and reacts to hover, saved actions, form errors, empty search results, and map loading. Touch devices use centred pupils and action reactions; reduced-motion preferences disable tracking, blinking, idle movement, and transitions. SVG assets work offline without an image service. See [design-identity.md](docs/design-identity.md) for tokens and accessibility choices.
+A light-gray canvas, charcoal header and actions, white reading surfaces, and pink accents follow the latest reference. The `jobu!` wordmark has no preceding icon. The face favicon and lightweight live SVG mascot remain part of the identity. The mascot looks toward a mouse pointer, blinks, and reacts to hover, saved actions, form errors, empty search results, and map loading. Touch devices use centred pupils and action reactions; reduced-motion preferences disable tracking, blinking, idle movement, and transitions. SVG assets work offline without an image service. See [design-identity.md](docs/design-identity.md) for tokens and accessibility choices.
 
 The previous local-storage key is deliberately retained so a branding update does not lose user data. The exporter also writes the old `nextrole-prototype.html` artifact path for compatibility.
 
@@ -29,7 +29,7 @@ The previous local-storage key is deliberately retained so a branding update doe
 
 - **New / Saved / All** folders, unread rows, search, work-mode filter, newest-found order.
 - Click to read in a desktop side panel or full-screen phone view.
-- Detail view: original pasted JD, salary, work mode, workplace, apply/source link, readiness and growth separately, portfolio evidence, and missing information.
+- Detail view: original pasted JD, salary, work mode, workplace, apply/source link, qualitative S/A/B/C fit tier with reasons, portfolio evidence, and missing information.
 - **Save / Skip / Applied** actions. Skip can be undone; read/saved/applied state persists locally.
 - Mark unread to return a job to the new inbox.
 - Profile and portfolio stay in settings. No large hero, comparison feature, or kanban dashboard.
@@ -37,6 +37,17 @@ The previous local-storage key is deliberately retained so a branding update doe
 - Preserve prior prototype local-storage profile, saved jobs, feedback, and checklists during upgrade.
 
 Opening an application link does not mark the job applied or submit anything. The Applied action is a manual record. Discovery date, posting date, and last status-check date are separate. Missing facts are never fabricated.
+
+## Fit tiers
+
+- **S — น่าลุยมาก:** a strong match of core work and portfolio evidence; check actual terms before applying.
+- **A — น่าสมัคร:** relevant core experience, with a few points to confirm.
+- **B — ลองขยับ:** transferable skills, with additional portfolio evidence needed.
+- **C — ยังไม่ค่อยตรง:** the main work is far from the current evidence or target field.
+
+This is qualitative triage, not numeric score bands. Manual keyword imports receive provisional A/B/C assignments; S requires stronger review and is illustrated in the demo. Missing salary/location gets a separate **รอเช็กข้อมูล** flag. Salary and office-day conflicts also stay separate, rather than being hidden in the letter. Do not interpret a tier as a guarantee that a vacancy meets the user's hard constraints.
+
+Older imported jobs are classified from their title/JD while retaining IDs, source links, saved/read/applied state, and other historical data. Legacy numeric fields may remain in browser storage for continuity but do not affect tier assignment or appear in the UI.
 
 ## Workplace maps
 
@@ -48,7 +59,7 @@ Live map availability requires access to `www.google.com`. The current cloud egr
 
 ## Data and prototype limits
 
-The eight initial vacancies/companies and scores are fictional. Portfolio previews are real project pages from the user's draft Port Beta 4. Scores are not calibrated assessments or probabilities. Salary and acceptable office-day defaults remain unset unless the user fills them; old user settings are preserved.
+The eight initial vacancies/companies and tier assignments are fictional. Portfolio previews are real project pages from the user's draft Port Beta 4. Tiers are not calibrated assessments or offer probabilities. Numeric fit and growth scores are no longer displayed or generated. Salary and acceptable office-day defaults remain unset unless the user fills them; old user settings are preserved.
 
 Manual assessment uses keyword rules, not AI. The app does not inspect source URLs or verify open status. No backend, automatic discovery, weekly agent, Notion sync, or automatic applications are connected.
 
@@ -74,7 +85,7 @@ npm run test:design
 APP_URL=http://127.0.0.1:4173 npm run test:smoke
 ```
 
-Uses Chromium at `/usr/bin/chromium`; set `CHROMIUM_PATH` if needed. Tests inbox/read state, persistence, folders, filters, JD/salary/location, map opt-in and provider URL (mocked), portfolio evidence, safe import, apply navigation/manual status, skip/undo, partial salary bounds, profile constraints, migration, phone focus isolation, five viewport widths, and the standalone artifact with networking disabled. The managed browser blocks `file://` navigation; the artifact is rendered directly for its offline check without changing browser policy.
+Uses Chromium at `/usr/bin/chromium`; set `CHROMIUM_PATH` if needed. Tests inbox/read state, persistence, folders, filters, JD/salary/location, map opt-in and provider URL (mocked), portfolio evidence, safe import, apply navigation/manual status, skip/undo, partial salary bounds, profile constraints, tier conversion from legacy jobs, phone focus isolation, five viewport widths, and the standalone artifact with networking disabled. The managed browser blocks `file://` navigation; the artifact is rendered directly for its offline check without changing browser policy.
 
 The design check additionally exercises pointer tracking and blinking, contextual expressions, waiting state, touch and reduced-motion behaviour, normal-text contrast on representative inbox/detail controls, and seven widths from 320–1440 px. It is not a complete accessibility audit or a live Maps availability test.
 
@@ -82,6 +93,7 @@ The design check additionally exercises pointer tracking and blinking, contextua
 
 - `src/main.js`: inbox, detail, settings, local state, interactions.
 - `src/mascot.js`: live vector face, bounded pupil tracking, expressions, and motion preferences.
+- `src/tiers.js`: qualitative role-fit rules and S/A/B/C meanings.
 - `src/assessment.js`: input validation, URL validation, keyword assessment.
 - `src/data.js`: draft profile, evidence, labelled fictional jobs.
 - `src/style.css`: responsive interface.

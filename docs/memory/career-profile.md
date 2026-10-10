@@ -73,8 +73,8 @@ Mollage is a media house whose work includes clients such as Netflix Thailand. D
 - Start with Visual Designer, Digital/Graphic Designer, and Content Designer roles that fit existing evidence.
 - Consider UI / Web positions emphasizing visual craft and offering a reasonable transition path.
 - Evaluate seniority from actual responsibilities, not just the title.
-- Show **readiness now** and **career growth** separately so existing event work does not trap recommendations in Event Design.
-- Keep hard constraints outside an aggregate score. Remote preference is confirmed; a maximum of two office days was only an earlier prototype assumption and is now unset by default.
+- Use qualitative **S / A / B / C fit tiers** with supporting reasons. The user has removed numeric fit and growth scores for now; this supersedes the earlier two-score prototype. Retain career direction in the reasons and gap notes.
+- Keep hard constraints outside the tier. Remote preference is confirmed; a maximum of two office days was only an earlier prototype assumption and is now unset by default.
 - Unknown salary, work mode, or team culture means **needs verification**, not automatic rejection.
 - Desired weekly search: roughly 5–8 relevant opportunities if enough exist, with reasons, requirements, deadline when known, source/application link, and important skill gaps. A weekly schedule is desired, not currently implemented.
 
@@ -83,7 +83,7 @@ Mollage is a media house whose work includes clients such as Netflix Thailand. D
 - The initial prototype felt too formal and like a job board.
 - Use a **Gmail-like inbox**: new jobs immediately visible, unread titles distinguished, and found date separate from posted date.
 - Keep just **new / saved / all**, search, and simple save / skip / applied actions.
-- Clicking a row reveals details, match statistics, relevant portfolio evidence, and links.
+- Clicking a row reveals details, a fit tier with reasons, relevant portfolio evidence, and links.
 - Expanded details must include **Job Description, salary, and workplace map**.
 - Keep profile/portfolio in settings. Remove the large hero, comparison workflow, and multi-column pipeline from the main experience.
 - Initial jobs remain explicitly fictional until real discovery is connected. Never manufacture application links, deadlines, office addresses, or live status.
@@ -93,7 +93,9 @@ Mollage is a media house whose work includes clients such as Netflix Thailand. D
 
 - Rename the application to **jobu!**, always lowercase with an exclamation mark.
 - Minimal / cute / playful productivity UI, with professional product-design clarity.
-- Palette: primary `#F43F8E`, soft pink `#FFB5D0`, background `#FFF6F9`, charcoal `#29232D`, secondary `#756D77`.
+- The initial pink palette was a starting point. The latest reference asks for a **light-gray background, more gray/black, and pink as accent/highlight**. Use a charcoal header/actions, white reading surfaces, and restrained pink accents.
+- Remove the icon before the `jobu!` wordmark; retain the text brand and mascot.
+- Show **Tier S / A / B / C**, with no growth score.
 - A rounded-square pink mascot inspired by the supplied reference, with expressive eyes that follow the mouse. Keep mascot use restrained and support touch and reduced motion.
 - Improve contrast while preserving the existing inbox flow, features, and stored data.
 

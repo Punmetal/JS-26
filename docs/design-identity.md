@@ -1,20 +1,22 @@
 # jobu! identity
 
-The user's latest design brief replaces the earlier green Nextrole identity, while retaining the minimal inbox and all existing workflows. Write the displayed name as **jobu!**. The supplied mascot sheet is a visual reference; the live character is an original inline SVG with independently animated pupils and expressions.
+The latest user reference asks for more gray/black, a light-gray canvas, and pink as accent/highlight. Retain the minimal inbox and its workflows. Write the displayed name as **jobu!**, with no preceding logo icon. The supplied mascot sheet remains the character reference; the live character is an original inline SVG with independently animated pupils and expressions.
 
 ## Palette and readability
 
 | Token | Color | Use |
 | --- | --- | --- |
-| Primary | `#F43F8E` | Main actions, active underline, unread dots, wordmark punctuation |
-| Soft pink | `#FFB5D0` | Brand mark, avatar, active count, mascot body |
-| Background | `#FFF6F9` | Application canvas |
-| Charcoal | `#29232D` | Titles and primary text |
-| Secondary | `#756D77` | Supporting copy, dates, placeholders |
-| Brand ink | `#A91957` | Small pink text and focus outlines |
-| Action ink | `#1D1821` | Text on primary pink buttons |
+| Pink accent | `#F078AC` | Active underline, unread dots, wordmark punctuation |
+| Soft pink | `#F7BAD4` | Avatar, active count, S-tier lettering, header focus outlines |
+| Background | `#E9E9EC` | Light-gray application canvas |
+| Charcoal | `#242328` | Header, main actions, titles, S-tier badge |
+| Secondary | `#68636D` | Supporting copy and dates on light surfaces |
+| Brand ink | `#96214F` | Small pink text and focus outlines on light surfaces |
+| White | `#FFFFFF` | Reading surfaces, text on charcoal actions/header |
 
-Primary pink with white small text falls below AA's 4.5:1 target. Use Action ink on Primary instead. Secondary on Background is approximately 4.70:1; on white it is 4.99:1. Success, growth, unknown, and applied statuses also carry text labels, with separate high-contrast semantic colors. Do not use opacity to wash out read or skipped rows.
+Use white text on charcoal actions, dark text on light reading surfaces, and light gray for the dark search input's placeholder. Pink is an accent, not the canvas color. The representative browser contrast checks target 4.5:1 for normal text using the actual computed foreground and opaque ancestor background. Do not use opacity to wash out read or skipped rows.
+
+Use **S / A / B / C** with a short label in the inbox and a single tier summary plus reasons in details. S has a charcoal badge with pink lettering, A has a pale-pink highlight, and B/C use neutral grays. No numeric fit score, growth score, or progress bar. Missing data is labelled **รอเช็กข้อมูล** independently; hard constraints have their own warning. See README.md for the meanings and provisional import rules.
 
 Use white surfaces, restrained borders, 12–18 px corners, and consistent spacing. Keep the inbox visible immediately. The mascot occupies a small welcome area, moves into an empty state when appropriate, and appears as a small helper in the import form. It is not repeated on each job row or detail section.
 

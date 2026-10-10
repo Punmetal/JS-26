@@ -18,7 +18,7 @@ async function contrast(selector, pseudo = '') {
     let node = element, background = [255,255,255];
     while (node) {
       const color = rgb(getComputedStyle(node).backgroundColor);
-      if (color[3] === 1) { background = color; break; }
+      if (color.length === 3 || color[3] === 1) { background = color; break; }
       node = node.parentElement;
     }
     const a = luminance(foreground), b = luminance(background);
@@ -37,7 +37,7 @@ try {
   for (const selector of ['h1','.eyebrow','.inbox-heading p','.folder-tab.active','.folder-tab:not(.active)','.row-title','.row-company','.row-company small','.row-preview','.row-salary','.row-found','.prototype-note','.list-order','.inbox-footer span','.add-job','#mode-select']) await contrast(selector);
   await contrast('#job-search', '::placeholder');
   await page.locator('[data-action="open-job"][data-id="j2"]').click();
-  for (const selector of ['.detail-heading h2','.detail-heading p','.job-facts small','.job-facts strong','.job-description h3','.jd-text','.source-caption','.text-link','.score-pair small','.score-caption','.pill.ready']) await contrast(selector);
+  for (const selector of ['.detail-heading h2','.detail-heading p','.job-facts small','.job-facts strong','.job-description h3','.jd-text','.source-caption','.text-link','.tier-summary p','.tier-caption','.tier-badge']) await contrast(selector);
   await page.locator('.detail-toolbar [data-action="close-detail"]').first().click();
   await page.locator('[data-action="open-job"][data-id="j4"]').click();
   await contrast('.pill.unknown');

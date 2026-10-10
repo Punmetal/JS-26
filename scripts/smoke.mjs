@@ -28,6 +28,12 @@ try {
   assert.match(await page.locator('.inbox-heading p').innerText(), /8 งาน/);
   passed('Initial screen is a job inbox with eight unread demos and no dashboard');
 
+  assert.equal(await page.locator('.brand-mark').count(), 0);
+  const tierLetters = await page.locator('.row-match .tier-badge b').allTextContents();
+  assert.deepEqual([...new Set(tierLetters)].sort(), ['A','B','C','S']);
+  assert.equal(await page.locator('.score-pair,.growth').count(), 0);
+  passed('All four labelled tiers appear in the inbox; the leading logo and numeric growth UI are removed');
+
   await open('j2');
   assert.match(await page.locator('.job-description').innerText(), /ออกแบบ key visual/);
   assert.match(await page.locator('.job-facts').innerText(), /35,000–48,000/);
@@ -35,6 +41,8 @@ try {
   assert.equal(await page.locator('[data-action="open-job"][data-id="j2"]').evaluate(el => el.closest('.job-row').classList.contains('read')), true);
   assert.match(await page.locator('.inbox-heading p').innerText(), /7 งาน/);
   assert.equal(await page.locator('.apply-area button').isDisabled(), true);
+  assert.equal(await page.locator('.tier-summary').count(), 1);
+  assert.doesNotMatch(await page.locator('.match-section').innerText(), /\/100|โอกาสเติบโต/);
   passed('Opening a row marks it read and reveals JD, salary, location, and stats');
 
   assert.equal(mapRequests.length, 0);
@@ -85,10 +93,10 @@ try {
 
   await open('j4');
   assert.match(await page.locator('.job-facts').innerText(), /ยังไม่ระบุ/);
-  assert.match(await page.locator('.detail-status').innerText(), /พร้อมสมัคร/);
-  assert.match(await page.locator('.detail-status').innerText(), /ข้อมูลยังไม่ครบ/);
+  assert.equal(await page.locator('.detail-status .tier-badge').getAttribute('aria-label'), 'Tier A · น่าสมัคร');
+  assert.match(await page.locator('.detail-status').innerText(), /รอเช็กข้อมูล/);
   await close();
-  passed('Missing salary is separate from readiness');
+  passed('Missing salary is flagged separately and does not lower the fit tier');
 
   await page.locator('.profile-button').click();
   await page.locator('[name="maxOfficeDays"]').selectOption('0');
@@ -132,7 +140,8 @@ try {
   await open(importedId);
   assert.equal(await page.locator('.job-description script,.job-detail img[src="x"]').count(), 0);
   assert.match(await page.locator('.jd-text').innerText(), /<script>/);
-  assert.match(await page.locator('.score-caption').innerText(), /กฎ keyword/);
+  assert.match(await page.locator('.tier-caption').innerText(), /กฎ keyword/);
+  assert.equal(await page.locator('.detail-status .tier-badge').getAttribute('aria-label'), 'Tier B · ลองขยับ');
   assert.equal(await page.locator('.apply-link').getAttribute('href'), 'https://careers.example.com/apply/ui');
   assert.match(await page.locator('.job-facts').innerText(), /50,000–60,000/);
   passed('Manual import validates salary, renders JD safely, and retains location / application URL');
@@ -195,7 +204,7 @@ try {
   passed('Inbox, full-screen phone detail, and settings fit five widths with focus isolation');
 
   const migrationContext = await browser.newContext(); const migrationPage = await migrationContext.newPage();
-  await migrationPage.addInitScript(() => localStorage.setItem('nextrole.prototype.v1', JSON.stringify({ profile: { name: 'Legacy Pun' }, saved: { j1: 'interview', j2: 'saved' }, customJobs: [], feedback: { j1: 'yes' }, checklist: { j1: [0] } })));
+  await migrationPage.addInitScript(() => localStorage.setItem('nextrole.prototype.v1', JSON.stringify({ profile: { name: 'Legacy Pun' }, saved: { j1: 'interview', j2: 'saved' }, customJobs: [{ id: 'legacy-motion', custom: true, title: 'Motion Designer', company: 'Legacy Studio', description: 'Motion and After Effects animation for digital campaigns', mode: 'remote', officeDays: 0, location: 'Thailand', salary: null, category: 'ready', readiness: 99, growth: 100, projects: [], requirements: [], reasons: [], gaps: [] }], feedback: { j1: 'yes' }, checklist: { j1: [0] } })));
   await migrationPage.goto(base, { waitUntil: 'networkidle' });
   await migrationPage.locator('[data-folder="saved"]').click();
   assert.equal(await migrationPage.locator('.job-row').count(), 2);
@@ -203,8 +212,13 @@ try {
   assert.equal(await migrationPage.locator('.detail-status .applied').count(), 1);
   const legacy = await migrationPage.evaluate(() => JSON.parse(localStorage.getItem('nextrole.prototype.v1')));
   assert.equal(legacy.feedback.j1, 'yes'); assert.deepEqual(legacy.checklist.j1, [0]);
+  await migrationPage.keyboard.press('Escape');
+  await migrationPage.locator('[data-folder="all"]').click();
+  await migrationPage.locator('[data-action="open-job"][data-id="legacy-motion"]').click();
+  assert.equal(await migrationPage.locator('.detail-status .tier-badge').getAttribute('aria-label'), 'Tier B · ลองขยับ');
+  assert.doesNotMatch(await migrationPage.locator('.match-section').innerText(), /\/100|โอกาสเติบโต|99/);
   await migrationContext.close();
-  passed('Old profile, saved/interview state, feedback, and checklists survive migration');
+  passed('Legacy score jobs receive qualitative tiers without losing profile, saved/interview state, feedback, or checklists');
 
   const standalone = path.resolve('artifacts/jobu-prototype.html');
   try {
