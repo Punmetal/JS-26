@@ -1,0 +1,22 @@
+{
+  "name": "jobu-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test:smoke": "node scripts/smoke.mjs",
+    "test:design": "node scripts/design-smoke.mjs",
+    "export:standalone": "vite build && node scripts/export-standalone.mjs"
+  },
+  "dependencies": {
+    "@fontsource/noto-sans-thai": "^5.2.0",
+    "@fontsource/plus-jakarta-sans": "^5.2.0"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.64.0",
+    "vite": "^7.3.0"
+  }
+}
